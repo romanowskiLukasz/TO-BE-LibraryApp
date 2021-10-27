@@ -1,7 +1,6 @@
 package pk.group.cinemasbapp.model;
 
 import lombok.*;
-import pk.group.cinemasbapp.repo.FilmRepo;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -38,4 +37,11 @@ public class Film {
     @OneToMany(mappedBy = "film")
     private Set<Seance> seanceSet;
 
+    public Film(String title, LocalDate premiere, String genre, int duration, String description) {
+        this.title = title;
+        this.premiere = premiere;
+        this.genre = genre;
+        this.duration = duration;
+        this.description = description;
+    }
 }

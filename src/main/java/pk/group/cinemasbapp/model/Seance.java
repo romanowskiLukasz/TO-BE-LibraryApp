@@ -30,4 +30,5 @@ public class Seance {
 
     @OneToMany(mappedBy = "seance")
     private Set<Seat> seatSet;
+
 }

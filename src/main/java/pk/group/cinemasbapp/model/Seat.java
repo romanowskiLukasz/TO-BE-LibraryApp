@@ -2,9 +2,7 @@ package pk.group.cinemasbapp.model;
 
 import lombok.*;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "seats")
@@ -25,4 +23,7 @@ public class Seat {
     @ManyToOne
     Seance seance;
 
+    public Seat(boolean isTaken) {
+        this.isTaken = isTaken;
+    }
 }

@@ -23,4 +23,7 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private Set<Seance> seanceSet;
 
+    public Room(int number) {
+        this.number = number;
+    }
 }
