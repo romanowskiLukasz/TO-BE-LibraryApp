@@ -54,10 +54,10 @@ public class TestController {
         Film film = new Film("Avengers: Wojna bez granic",
                 LocalDate.parse("2018-04-26"), "Akcja", 149,
                 "Na Ziemię przybywa wielki Thanos poszukujący artefaktów zwanych Kamieniami Nieskończoności");
-        //filmRepo.save(film);
+        filmRepo.save(film);
 
         Room room = new Room(1);
-        //roomRepo.save(room);
+        roomRepo.save(room);
 
 
 
