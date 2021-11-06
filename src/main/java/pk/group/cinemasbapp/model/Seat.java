@@ -26,4 +26,9 @@ public class Seat {
     public Seat(boolean isTaken) {
         this.isTaken = isTaken;
     }
+
+    public Seat(boolean isTaken, Seance seance) {
+        this.isTaken = isTaken;
+        this.seance = seance;
+    }
 }

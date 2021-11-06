@@ -11,9 +11,11 @@ import pk.group.cinemasbapp.model.*;
 import pk.group.cinemasbapp.repo.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 @RestController
 @RequestMapping("/cinema")
@@ -44,13 +46,6 @@ public class TestController {
         userRepo.save(user1);
         userRepo.save(user2);
 
-//        List<Seat> seatList = new ArrayList<>();
-//        for (int i = 0; i < 20; i++) {
-//            Seat seat = new Seat(false);
-//            seatList.add(seat);
-//            seatRepo.save(seat);
-//        }
-
         Film film = new Film("Avengers: Wojna bez granic",
                 LocalDate.parse("2018-04-26"), "Akcja", 149,
                 "Na Ziemię przybywa wielki Thanos poszukujący artefaktów zwanych Kamieniami Nieskończoności");
@@ -59,8 +54,15 @@ public class TestController {
         Room room = new Room(1);
         roomRepo.save(room);
 
+        Seance seance = new Seance(film, room, LocalDate.parse("2021-12-20"), LocalTime.parse("10:15"));
+        seanceRepo.save(seance);
 
-
+        List<Seat> seatList = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            Seat seat = new Seat(false, seance);
+            seatList.add(seat);
+            seatRepo.save(seat);
+        }
 
     }
 
