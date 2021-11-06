@@ -3,10 +3,7 @@ package pk.group.cinemasbapp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pk.group.cinemasbapp.model.*;
 import pk.group.cinemasbapp.repo.*;
 
@@ -54,7 +51,15 @@ public class TestController {
         Room room = new Room(1);
         roomRepo.save(room);
 
-        Seance seance = new Seance(film, room, LocalDate.parse("2021-12-20"), LocalTime.parse("10:15"));
+        addSeance(film, room, LocalDate.parse("2021-12-20"), LocalTime.parse("10:15"));
+        addSeance(film, room, LocalDate.parse("2021-12-20"), LocalTime.parse("13:15"));
+        addSeance(film, room, LocalDate.parse("2021-12-20"), LocalTime.parse("16:20"));
+        addSeance(film, room, LocalDate.parse("2021-12-21"), LocalTime.parse("10:15"));
+        addSeance(film, room, LocalDate.parse("2021-12-21"), LocalTime.parse("15:15"));
+    }
+
+    public void addSeance(Film film, Room room, LocalDate date, LocalTime time){
+        Seance seance = new Seance(film, room, date, time);
         seanceRepo.save(seance);
 
         List<Seat> seatList = new ArrayList<>();
@@ -63,7 +68,6 @@ public class TestController {
             seatList.add(seat);
             seatRepo.save(seat);
         }
-
     }
 
     @GetMapping("/users")
@@ -82,6 +86,19 @@ public class TestController {
     public List<Room> getAllRooms(){
         List<Room> rooms = roomRepo.findAll();
         return rooms;
+    }
+
+    @GetMapping("/seances")
+    public List<Seance> getAllSeances(){
+        List<Seance> seances = seanceRepo.findAll();
+        System.out.println(seances);
+        return seances;
+    }
+
+    @GetMapping("/seances/{day}")
+    public List<Seance> getSeancesByDay(@PathVariable String day){
+        List<Seance> seances = seanceRepo.findSeancesByDate(LocalDate.parse(day));
+        return seances;
     }
 
 }
