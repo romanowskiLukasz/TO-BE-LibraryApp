@@ -35,6 +35,9 @@ public class Film {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "img")
+    private String img;
+
     @OneToMany(mappedBy = "film")
     @JsonIgnore
     private Set<Seance> seanceSet;
@@ -45,5 +48,14 @@ public class Film {
         this.genre = genre;
         this.duration = duration;
         this.description = description;
+    }
+
+    public Film(String title, LocalDate premiere, String genre, int duration, String description, String img) {
+        this.title = title;
+        this.premiere = premiere;
+        this.genre = genre;
+        this.duration = duration;
+        this.description = description;
+        this.img = img;
     }
 }

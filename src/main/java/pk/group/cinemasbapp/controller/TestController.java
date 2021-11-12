@@ -11,9 +11,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/cinema")
 @CrossOrigin
 public class TestController {
 
@@ -22,18 +24,20 @@ public class TestController {
     RoomRepo roomRepo;
     SeanceRepo seanceRepo;
     SeatRepo seatRepo;
+    ReservationRepo reservationRepo;
 
     @Autowired
-    public TestController(UserRepo userRepo, FilmRepo filmRepo, RoomRepo roomRepo, SeanceRepo seanceRepo, SeatRepo seatRepo) {
+    public TestController(UserRepo userRepo, FilmRepo filmRepo, RoomRepo roomRepo, SeanceRepo seanceRepo, SeatRepo seatRepo, ReservationRepo reservationRepo) {
         this.userRepo = userRepo;
         this.filmRepo = filmRepo;
         this.roomRepo = roomRepo;
         this.seanceRepo = seanceRepo;
         this.seatRepo = seatRepo;
+        this.reservationRepo = reservationRepo;
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void startDBTest(){
+    public void startDBTest() {
         User user = new User("Piotr", "Migda", "piotr16@fake.pl", "lubieAGH123");
         User user1 = new User("Kiotr", "Pigda", "kiotr16@fake.pl", "lubieUJ123");
         User user2 = new User("Riotr", "Zigda", "riotr16@fake.pl", "lubiePK123");
@@ -54,9 +58,16 @@ public class TestController {
         addSeance(film, room, LocalDate.parse("2021-12-20"), LocalTime.parse("16:20"));
         addSeance(film, room, LocalDate.parse("2021-12-21"), LocalTime.parse("10:15"));
         addSeance(film, room, LocalDate.parse("2021-12-21"), LocalTime.parse("15:15"));
+
+
     }
 
-    public void addSeance(Film film, Room room, LocalDate date, LocalTime time){
+    public void addReservation(Seat seat, User user, Seance seance) {
+        Reservation reservation = new Reservation(seat, user, seance);
+        reservationRepo.save(reservation);
+    }
+
+    public void addSeance(Film film, Room room, LocalDate date, LocalTime time) {
         Seance seance = new Seance(film, room, date, time);
         seanceRepo.save(seance);
 
@@ -68,35 +79,83 @@ public class TestController {
         }
     }
 
+    @PostMapping("/reservation")
+    public void postReservation(@RequestParam Map<String, String> allParams) {
+        Seat seat = seatRepo.findById(Long.parseLong(allParams.get("seatId"))).get();
+        User user = userRepo.findById(Long.parseLong(allParams.get("userId"))).get();
+        Seance seance = seanceRepo.findById(Long.parseLong(allParams.get("seanceId"))).get();
+        Reservation reservation = new Reservation(seat, user, seance);
+        seat.setTaken(true);
+        seatRepo.save(seat);
+        reservationRepo.save(reservation);
+    }
+
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        List<User> users = userRepo.findAll();
-        return users;
+        return userRepo.findAll();
     }
 
     @GetMapping("/films")
     public List<Film> getAllFilms() {
-        List<Film> films = filmRepo.findAll();
-        return films;
+        return filmRepo.findAll();
+    }
+
+    @GetMapping("/seanceroom")
+    public SeanceRoom getSeanceRoom(@RequestParam String filmId,
+                                    @RequestParam String date,
+                                    @RequestParam String time) {
+        Seance seance = seanceRepo.findByFilm_IdAndDateAndTime(Long.parseLong(filmId), LocalDate.parse(date), LocalTime.parse(time)).get();
+        return SeanceRoom.builder()
+                .seanceId(seance.getId())
+                .roomId(seance.getRoom().getId())
+                .seatList(seatRepo.findAllBySeance(seance))
+                .build();
     }
 
     @GetMapping("/rooms")
-    public List<Room> getAllRooms(){
-        List<Room> rooms = roomRepo.findAll();
-        return rooms;
+    public List<Room> getAllRooms() {
+        return roomRepo.findAll();
     }
 
     @GetMapping("/seances")
-    public List<Seance> getAllSeances(){
+    public List<Seance> getAllSeances() {
         List<Seance> seances = seanceRepo.findAll();
-        System.out.println(seances);
         return seances;
     }
 
     @GetMapping("/seances/{day}")
-    public List<Seance> getSeancesByDay(@PathVariable String day){
-        List<Seance> seances = seanceRepo.findSeancesByDate(LocalDate.parse(day));
-        return seances;
+    public List<Seance> getSeancesByDay(@PathVariable String day) {
+        return seanceRepo.findSeancesByDate(LocalDate.parse(day));
+    }
+
+    @GetMapping("/repertuar/{date}")
+    public List<Repertuar> getRepertuarByDate(@PathVariable String date) {
+        return prepareRepertuar(LocalDate.parse(date));
+    }
+
+    private List<Repertuar> prepareRepertuar(LocalDate date) {
+        List<Seance> seancesAll = seanceRepo.findSeancesByDate(date);
+        List<Film> films = seancesAll.stream().map(Seance::getFilm).distinct().collect(toList());
+
+        List<Repertuar> repertuars = new ArrayList<>();
+
+        films.forEach(film -> {
+            Repertuar build = Repertuar.builder()
+                    .id(film.getId())
+                    .genre(film.getGenre())
+                    .title(film.getTitle())
+                    .img(film.getImg())
+                    .timeList(seancesAll.stream()
+                            .filter(seance ->
+                                    seance.getFilm()
+                                            .equals(film))
+                            .map(Seance::getTime)
+                            .collect(toList()))
+                    .build();
+            repertuars.add(build);
+        });
+
+        return repertuars;
     }
 
 }
