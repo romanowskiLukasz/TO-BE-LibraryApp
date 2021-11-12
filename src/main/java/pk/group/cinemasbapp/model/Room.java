@@ -1,5 +1,6 @@
 package pk.group.cinemasbapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Room {
 
     private int number;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "room")
     private Set<Seance> seanceSet;
 

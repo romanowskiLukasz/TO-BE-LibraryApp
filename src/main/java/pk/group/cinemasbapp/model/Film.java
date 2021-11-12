@@ -1,5 +1,6 @@
 package pk.group.cinemasbapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class Film {
     private String description;
 
     @OneToMany(mappedBy = "film")
+    @JsonIgnore
     private Set<Seance> seanceSet;
 
     public Film(String title, LocalDate premiere, String genre, int duration, String description) {
