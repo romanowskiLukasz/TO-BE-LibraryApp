@@ -2,8 +2,7 @@ package pk.group.cinemasbapp.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pk.group.cinemasbapp.model.Film;
-import pk.group.cinemasbapp.model.Seance;
+import pk.group.cinemasbapp.entities.Seance;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
