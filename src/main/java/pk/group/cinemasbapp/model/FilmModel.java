@@ -2,23 +2,15 @@ package pk.group.cinemasbapp.model;
 
 import lombok.*;
 
-import java.time.LocalTime;
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Repertuar {
+public class FilmModel {
 
     private Long id;
-
-    private String genre;
-
     private String title;
-
+    private String genre;
     private String img;
-
-    private List<LocalTime> timeList;
 }

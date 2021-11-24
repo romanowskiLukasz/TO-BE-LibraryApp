@@ -1,6 +1,7 @@
 package pk.group.cinemasbapp.model;
 
 import lombok.*;
+import pk.group.cinemasbapp.entities.Seat;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeanceRoom {
+public class SeanceRoomModel {
 
     private Long seanceId;
 

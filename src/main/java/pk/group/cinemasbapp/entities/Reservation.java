@@ -1,5 +1,6 @@
-package pk.group.cinemasbapp.model;
+package pk.group.cinemasbapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Reservation {
     private Seat seat;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @ManyToOne
