@@ -1,8 +1,6 @@
-package pk.group.cinemasbapp.model;
+package pk.group.libraryapp.model;
 
 import lombok.*;
-
-import javax.persistence.Column;
 
 @Getter
 @Setter

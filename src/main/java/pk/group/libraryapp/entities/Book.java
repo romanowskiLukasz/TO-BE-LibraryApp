@@ -1,20 +1,20 @@
-package pk.group.cinemasbapp.entities;
+package pk.group.libraryapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "films")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Film {
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +23,8 @@ public class Film {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "premiere_date", columnDefinition = "DATE")
-    private LocalDate premiere;
-
     @Column(name = "genre")
     private String genre;
-
-    @Column(name = "duration")
-    private int duration;
 
     @Column(name = "description")
     @Lob
@@ -39,23 +33,35 @@ public class Film {
     @Column(name = "img")
     private String img;
 
-    @OneToMany(mappedBy = "film")
-    @JsonIgnore
-    private Set<Seance> seanceSet;
 
-    public Film(String title, LocalDate premiere, String genre, int duration, String description) {
+    @ManyToOne
+    private PublishingHouse publishingHouse;
+
+    @OneToMany(mappedBy="book")
+    private Set<Rating> rating;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "book_author",
+            joinColumns = { @JoinColumn(name = "book_id") },
+            inverseJoinColumns = { @JoinColumn(name = "author_id") })
+    private List<Author> authors;
+
+    @OneToMany(mappedBy = "book")
+    private Set<Reservation> reservations;
+
+
+
+
+    public Book(String title, String genre, String description) {
         this.title = title;
-        this.premiere = premiere;
         this.genre = genre;
-        this.duration = duration;
         this.description = description;
     }
 
-    public Film(String title, LocalDate premiere, String genre, int duration, String description, String img) {
+    public Book(String title, String genre, String description, String img) {
         this.title = title;
-        this.premiere = premiere;
         this.genre = genre;
-        this.duration = duration;
         this.description = description;
         this.img = img;
     }

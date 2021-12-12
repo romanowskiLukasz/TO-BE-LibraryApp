@@ -1,9 +1,10 @@
-package pk.group.cinemasbapp.entities;
+package pk.group.libraryapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "reservations")
@@ -18,19 +19,22 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Seat seat;
+    @Column(name = "reservationDate")
+    private LocalDate reservationDate;
+
+    @Column(name = "returnDate")
+    private LocalDate returnDate;
+
 
     @ManyToOne
     @JsonIgnore
     private User user;
 
     @ManyToOne
-    private Seance seance;
+    private Book book;
 
-    public Reservation(Seat seat, User user, Seance seance) {
-        this.seat = seat;
+    public Reservation( User user, Book book) {
         this.user = user;
-        this.seance = seance;
+        this.book = book;
     }
 }

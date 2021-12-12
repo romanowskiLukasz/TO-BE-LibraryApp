@@ -1,43 +1,48 @@
-package pk.group.cinemasbapp.service;
+package pk.group.libraryapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import pk.group.cinemasbapp.entities.*;
-import pk.group.cinemasbapp.model.*;
-import pk.group.cinemasbapp.repo.*;
+import pk.group.libraryapp.entities.*;
+import pk.group.libraryapp.model.*;
+import pk.group.libraryapp.repo.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
 @org.springframework.stereotype.Service
-public class CinemaService {
+public class LibraryService {
 
     private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
-    UserRepo userRepo;
+    BookRepo bookRepo;
+   /* UserRepo userRepo;
     FilmRepo filmRepo;
     RoomRepo roomRepo;
     SeanceRepo seanceRepo;
     SeatRepo seatRepo;
-    ReservationRepo reservationRepo;
+    ReservationRepo reservationRepo;*/
 
     @Autowired
-    public CinemaService(UserRepo userRepo, FilmRepo filmRepo, RoomRepo roomRepo, SeanceRepo seanceRepo, SeatRepo seatRepo, ReservationRepo reservationRepo) {
-        this.userRepo = userRepo;
+    public LibraryService(BookRepo bookRepo/*UserRepo userRepo, FilmRepo filmRepo, RoomRepo roomRepo, SeanceRepo seanceRepo, SeatRepo seatRepo, ReservationRepo reservationRepo*/) {
+        this.bookRepo=bookRepo;
+        /*this.userRepo = userRepo;
         this.filmRepo = filmRepo;
         this.roomRepo = roomRepo;
         this.seanceRepo = seanceRepo;
         this.seatRepo = seatRepo;
-        this.reservationRepo = reservationRepo;
+        this.reservationRepo = reservationRepo;*/
     }
 
-    public void addReservation(Seat seat, User user, Seance seance) {
+//    public List<BookModel> getBooksInfo() {
+//        return bookRepo.getBooksInfo();
+//    }
+
+    /*public void addReservation(Seat seat, User user, Seance seance) {
         Reservation reservation = new Reservation(seat, user, seance);
         reservationRepo.save(reservation);
     }
@@ -162,5 +167,5 @@ public class CinemaService {
 
     public List<Reservation> getReservationsByUserId(Long userId){
         return reservationRepo.getAllByUser_Id(userId);
-    }
+    }*/
 }

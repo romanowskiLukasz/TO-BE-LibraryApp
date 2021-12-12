@@ -1,11 +1,12 @@
-package pk.group.cinemasbapp.entities;
+package pk.group.libraryapp.entities;
 
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,18 +22,24 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "surname")
-    private String surname;
-
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
     private String password;
 
-    public User(String name, String surname, String email, String password) {
+    @OneToMany(mappedBy = "user")
+    private Set<Form> form;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Rating> ratings;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Reservation> reservations;
+
+
+    public User(String name, String email, String password) {
         this.name = name;
-        this.surname = surname;
         this.email = email;
         this.password = password;
     }

@@ -1,4 +1,4 @@
-package pk.group.cinemasbapp.model;
+package pk.group.libraryapp.model;
 
 import lombok.*;
 
@@ -7,10 +7,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FilmModel {
+public class BookModel {
 
-    private Long id;
     private String title;
     private String genre;
     private String img;
+    private String description;
+    private String name;
 }

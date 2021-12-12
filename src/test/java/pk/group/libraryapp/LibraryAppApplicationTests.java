@@ -1,10 +1,10 @@
-package pk.group.cinemasbapp;
+package pk.group.libraryapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CinemaSbAppApplicationTests {
+class LibraryAppApplicationTests {
 
     @Test
     void contextLoads() {

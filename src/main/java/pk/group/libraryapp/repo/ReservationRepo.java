@@ -1,13 +1,12 @@
-package pk.group.cinemasbapp.repo;
+package pk.group.libraryapp.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pk.group.cinemasbapp.entities.Reservation;
-import pk.group.cinemasbapp.entities.User;
+import pk.group.libraryapp.entities.Reservation;
 
 import java.util.List;
 
 @Repository
 public interface ReservationRepo extends JpaRepository<Reservation, Long> {
-    List<Reservation> getAllByUser_Id(Long user);
+    /*List<Reservation> getAllByUser_Id(Long user);*/
 }
