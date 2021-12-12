@@ -7,6 +7,8 @@ insert into book (title, genre, description, img) values ('The Great Gatsby','te
 
 insert into book (title, genre, description, img) values ('Winne The Pooh','pigletowo','Pooh and his friends enjoy a spirited game of hide-and-seek in the Hundred-Acre Wood.','https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1631160351l/561480._SX318_.jpg')
 
+insert into book (title, genre, description, img) values ('Animal Farm','pigletowo','A farm is taken over by its overworked, mistreated animals. With flaming idealism and stirring slogans, they set out to create a paradise of progress, justice, and equality.','https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1325861570l/170448.jpg')
+
 insert into author (name) values ('Georg Orwell')
 
 insert into author (name) values ('Harper Lee')
@@ -15,10 +17,11 @@ insert into author (name) values ('Francis Scott Fitzgerald')
 
 insert into author (name) values ('Walt Disney')
 
-/*insert into book_author (book_id,author_id) values (1,2)
-
 insert into book_author (book_id,author_id) values (2,1)
-
+insert into book_author (book_id,author_id) values (1,2)
 insert into book_author (book_id,author_id) values (3,3)
+insert into book_author (book_id,author_id) values (4,4)
+insert into book_author (book_id,author_id) values (5,1)
 
-insert into book_author (book_id,author_id) values (4,4)*/
+insert  into publishing_house (adress,name) values ('test','test')
+insert  into publishing_house (adress,name) values ('test2','test2')

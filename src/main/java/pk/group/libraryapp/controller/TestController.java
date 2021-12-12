@@ -20,10 +20,10 @@ public class TestController {
         this.libraryService = libraryService;
     }
 
-//    @GetMapping("/books")
-//    public List<BookModel> getBooksInfo(){
-//        return libraryService.getBooksInfo();
-//    }
+    @GetMapping("/books")
+    public List<BookModel> getBooksInfo(){
+        return libraryService.getBooksInfo();
+    }
 
     /*
     @PostMapping("/reservation")

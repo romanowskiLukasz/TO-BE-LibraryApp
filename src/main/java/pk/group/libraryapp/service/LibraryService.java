@@ -38,9 +38,9 @@ public class LibraryService {
         this.reservationRepo = reservationRepo;*/
     }
 
-//    public List<BookModel> getBooksInfo() {
-//        return bookRepo.getBooksInfo();
-//    }
+    public List<BookModel> getBooksInfo() {
+        return bookRepo.getBooksInfo();
+    }
 
     /*public void addReservation(Seat seat, User user, Seance seance) {
         Reservation reservation = new Reservation(seat, user, seance);

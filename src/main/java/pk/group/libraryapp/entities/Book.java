@@ -18,7 +18,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long book_id;
 
     @Column(name = "title")
     private String title;
@@ -40,7 +40,10 @@ public class Book {
     @OneToMany(mappedBy="book")
     private Set<Rating> rating;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(
             name = "book_author",
             joinColumns = { @JoinColumn(name = "book_id") },
@@ -53,7 +56,7 @@ public class Book {
 
 
 
-    public Book(String title, String genre, String description) {
+    public Book(String title, String genre, String description ) {
         this.title = title;
         this.genre = genre;
         this.description = description;
