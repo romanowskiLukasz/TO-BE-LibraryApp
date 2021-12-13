@@ -20,7 +20,8 @@ public class LibraryService {
     private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     BookRepo bookRepo;
-   /* UserRepo userRepo;
+    UserRepo userRepo;
+   /*
     FilmRepo filmRepo;
     RoomRepo roomRepo;
     SeanceRepo seanceRepo;
@@ -28,9 +29,10 @@ public class LibraryService {
     ReservationRepo reservationRepo;*/
 
     @Autowired
-    public LibraryService(BookRepo bookRepo/*UserRepo userRepo, FilmRepo filmRepo, RoomRepo roomRepo, SeanceRepo seanceRepo, SeatRepo seatRepo, ReservationRepo reservationRepo*/) {
+    public LibraryService(BookRepo bookRepo,UserRepo userRepo/*, FilmRepo filmRepo, RoomRepo roomRepo, SeanceRepo seanceRepo, SeatRepo seatRepo, ReservationRepo reservationRepo*/) {
         this.bookRepo=bookRepo;
-        /*this.userRepo = userRepo;
+        this.userRepo = userRepo;
+        /*
         this.filmRepo = filmRepo;
         this.roomRepo = roomRepo;
         this.seanceRepo = seanceRepo;
@@ -40,6 +42,31 @@ public class LibraryService {
 
     public List<BookModel> getBooksInfo() {
         return bookRepo.getBooksInfo();
+    }
+
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    public void registerUser(RegisterModel registerModel) {
+        User user = User.builder()
+                .name(registerModel.getName())
+                .email(registerModel.getEmail())
+                .password(PASSWORD_ENCODER.encode(registerModel.getPassword()))
+                .build();
+        userRepo.save(user);
+    }
+
+    public String loginUser(LoginModel loginModel){
+        User user = userRepo.findByEmail(loginModel.getEmail());
+        if(user == null){
+            return "2";
+        }
+        if(PASSWORD_ENCODER.matches(loginModel.getPassword(), user.getPassword())){
+            return "0";
+        }else {
+            return "1";
+        }
     }
 
     /*public void addReservation(Seat seat, User user, Seance seance) {
@@ -69,9 +96,7 @@ public class LibraryService {
         reservationRepo.save(reservation);
     }
 
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
-    }
+
 
     public List<FilmModel> getAllFilms(){
         return filmRepo.findAll()
@@ -143,27 +168,9 @@ public class LibraryService {
         return repertuars;
     }
 
-    public void registerUser(RegisterModel registerModel) {
-        User user = User.builder()
-                .name(registerModel.getName())
-                .surname(registerModel.getSurname())
-                .email(registerModel.getEmail())
-                .password(PASSWORD_ENCODER.encode(registerModel.getPassword()))
-                .build();
-        userRepo.save(user);
-    }
 
-    public String loginUser(LoginModel loginModel){
-        User user = userRepo.findByEmail(loginModel.getEmail());
-        if(user == null){
-            return "2";
-        }
-        if(PASSWORD_ENCODER.matches(loginModel.getPassword(), user.getPassword())){
-            return "0";
-        }else {
-            return "1";
-        }
-    }
+
+
 
     public List<Reservation> getReservationsByUserId(Long userId){
         return reservationRepo.getAllByUser_Id(userId);

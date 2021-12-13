@@ -25,3 +25,4 @@ insert into book_author (book_id,author_id) values (5,1)
 
 insert  into publishing_house (adress,name) values ('test','test')
 insert  into publishing_house (adress,name) values ('test2','test2')
+

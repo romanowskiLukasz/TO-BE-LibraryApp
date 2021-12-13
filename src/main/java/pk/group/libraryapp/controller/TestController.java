@@ -25,12 +25,6 @@ public class TestController {
         return libraryService.getBooksInfo();
     }
 
-    /*
-    @PostMapping("/reservation")
-    public void postReservation(@RequestBody ReservationModel reservationModel) {
-        libraryService.postReservation(reservationModel);
-    }
-
     @PostMapping("/user/register")
     public void registerUser(@RequestBody RegisterModel registerModel){
         libraryService.registerUser(registerModel);
@@ -41,15 +35,25 @@ public class TestController {
         return libraryService.loginUser(loginModel);
     }
 
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return libraryService.getAllUsers();
+    }
+
+    /*
+    @PostMapping("/reservation")
+    public void postReservation(@RequestBody ReservationModel reservationModel) {
+        libraryService.postReservation(reservationModel);
+    }
+
+
+
     @GetMapping("/reservation/{userId}")
     public List<Reservation> getReservationsByUserId(@PathVariable String userId){
         return libraryService.getReservationsByUserId(Long.parseLong(userId));
     }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return libraryService.getAllUsers();
-    }
+
 
     @GetMapping("/films")
     public List<FilmModel> getAllFilms() {
