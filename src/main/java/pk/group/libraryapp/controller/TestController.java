@@ -40,6 +40,11 @@ public class TestController {
         return libraryService.getAllUsers();
     }
 
+    @PostMapping("/user/message")
+    public void addMessage(@RequestBody Messages message){
+        libraryService.addMessage(message);
+    }
+
     /*
     @PostMapping("/reservation")
     public void postReservation(@RequestBody ReservationModel reservationModel) {

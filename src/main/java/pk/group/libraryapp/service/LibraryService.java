@@ -21,23 +21,13 @@ public class LibraryService {
 
     BookRepo bookRepo;
     UserRepo userRepo;
-   /*
-    FilmRepo filmRepo;
-    RoomRepo roomRepo;
-    SeanceRepo seanceRepo;
-    SeatRepo seatRepo;
-    ReservationRepo reservationRepo;*/
+    MessageRepo messageRepo;
 
     @Autowired
-    public LibraryService(BookRepo bookRepo,UserRepo userRepo/*, FilmRepo filmRepo, RoomRepo roomRepo, SeanceRepo seanceRepo, SeatRepo seatRepo, ReservationRepo reservationRepo*/) {
+    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo) {
         this.bookRepo=bookRepo;
         this.userRepo = userRepo;
-        /*
-        this.filmRepo = filmRepo;
-        this.roomRepo = roomRepo;
-        this.seanceRepo = seanceRepo;
-        this.seatRepo = seatRepo;
-        this.reservationRepo = reservationRepo;*/
+        this.messageRepo=messageRepo;
     }
 
     public List<BookModel> getBooksInfo() {
@@ -55,6 +45,15 @@ public class LibraryService {
                 .password(PASSWORD_ENCODER.encode(registerModel.getPassword()))
                 .build();
         userRepo.save(user);
+    }
+
+    public void addMessage(Messages messages) {
+        Messages message = Messages.builder()
+                .email(messages.getEmail())
+                .topic(messages.getTopic())
+                .contents(messages.getContents())
+                .build();
+        messageRepo.save(message);
     }
 
     public String loginUser(LoginModel loginModel){
