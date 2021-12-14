@@ -45,59 +45,5 @@ public class TestController {
         libraryService.addMessage(message);
     }
 
-    /*
-    @PostMapping("/reservation")
-    public void postReservation(@RequestBody ReservationModel reservationModel) {
-        libraryService.postReservation(reservationModel);
-    }
-
-
-
-    @GetMapping("/reservation/{userId}")
-    public List<Reservation> getReservationsByUserId(@PathVariable String userId){
-        return libraryService.getReservationsByUserId(Long.parseLong(userId));
-    }
-
-
-
-    @GetMapping("/films")
-    public List<FilmModel> getAllFilms() {
-        return libraryService.getAllFilms();
-    }
-
-    @GetMapping("/films/{filmId}")
-    public Film getFilmByID(@PathVariable String filmId){
-        return libraryService.getFilmById(Long.parseLong(filmId));
-    }
-
-    @GetMapping("/seanceroom")
-    public SeanceRoomModel getSeanceRoom(@RequestParam String filmId,
-                                         @RequestParam String date,
-                                         @RequestParam String time) {
-        return libraryService.getSeanceRoom(filmId, date, time);
-    }
-
-    @GetMapping("/rooms")
-    public List<Room> getAllRooms() {
-        return libraryService.getAllRooms();
-    }
-
-    @GetMapping("/seances")
-    public List<Seance> getAllSeances() {
-        return libraryService.getAllSeances();
-    }
-
-    @GetMapping("/seances/{day}")
-    public List<Seance> getSeancesByDay(@PathVariable String day) {
-        return libraryService.getSeancesByDay(LocalDate.parse(day));
-    }
-
-    @GetMapping("/repertuar/{date}")
-    public List<Repertuar> getRepertuarByDate(@PathVariable String date) {
-        return libraryService.getRepertuarByDate(LocalDate.parse(date));
-    }
-    */
-
-   
 
 }
