@@ -27,7 +27,7 @@ insert into book (title, genre, description, img,publishing_house_id) values ('1
 
 insert into book (title, genre, description, img,publishing_house_id) values ('The Great Gatsby','test','The Great Gatsby, F. Scott Fitzgerald''s third book, stands as the supreme achievement of his career.','https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1490528560l/4671._SY475_.jpg',1)
 
-insert into book (title, genre, description, img,publishing_house_id) values ('Winne The Pooh','pigletowo','Pooh and his friends enjoy a spirited game of hide-and-seek in the Hundred-Acre Wood.','https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1631160351l/561480._SX318_.jpg',1)
+insert into book (title, genre, description, img,publishing_house_id) values ('Winne The Pooh','pigletowo','Pooh and his friends enjoy a spirited game of hide-and-seek in the Hundred-Acre Wood.','https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1561740531l/2617684._SX318_.jpg',1)
 
 insert into book (title, genre, description, img,publishing_house_id) values ('Animal Farm','literatura piękna','A farm is taken over by its overworked, mistreated animals. With flaming idealism and stirring slogans, they set out to create a paradise of progress, justice, and equality.','https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1325861570l/170448.jpg',2)
 

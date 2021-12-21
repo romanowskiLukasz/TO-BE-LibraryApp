@@ -68,5 +68,9 @@ public class LibraryService {
         }
     }
 
+    public BookModel getBookById(Long id){
+        return bookRepo.getInfoById(id);
+    }
+
 
 }

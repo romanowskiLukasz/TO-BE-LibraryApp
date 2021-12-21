@@ -25,6 +25,12 @@ public class TestController {
         return libraryService.getBooksInfo();
     }
 
+    @GetMapping("/books/{bookId}")
+    public BookModel getBookByID(@PathVariable String bookId){
+        return libraryService.getBookById(Long.parseLong(bookId));
+    }
+
+
     @PostMapping("/user/register")
     public void registerUser(@RequestBody RegisterModel registerModel){
         libraryService.registerUser(registerModel);
