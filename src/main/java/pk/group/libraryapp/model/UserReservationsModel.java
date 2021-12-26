@@ -9,7 +9,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReservationModel {
-    Long bookId;
-    Long userId;
+public class UserReservationsModel {
+    String title;
+    String name;
+    LocalDate reservation_date;
+    LocalDate return_date;
 }

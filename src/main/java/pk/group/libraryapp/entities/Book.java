@@ -33,6 +33,9 @@ public class Book {
     @Column(name = "img")
     private String img;
 
+    @Column(name = "amount")
+    private Integer amount;
+
 
     @ManyToOne
     private PublishingHouse publishingHouse;
@@ -62,10 +65,11 @@ public class Book {
         this.description = description;
     }
 
-    public Book(String title, String genre, String description, String img) {
+    public Book(String title, String genre, String description, String img, Integer amount) {
         this.title = title;
         this.genre = genre;
         this.description = description;
         this.img = img;
+        this.amount= amount;
     }
 }

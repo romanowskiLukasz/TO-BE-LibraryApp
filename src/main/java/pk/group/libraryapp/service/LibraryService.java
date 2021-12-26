@@ -1,6 +1,8 @@
 package pk.group.libraryapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pk.group.libraryapp.entities.*;
@@ -10,6 +12,7 @@ import pk.group.libraryapp.repo.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -22,12 +25,14 @@ public class LibraryService {
     BookRepo bookRepo;
     UserRepo userRepo;
     MessageRepo messageRepo;
+    ReservationRepo reservationRepo;
 
     @Autowired
-    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo) {
+    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo) {
         this.bookRepo=bookRepo;
         this.userRepo = userRepo;
         this.messageRepo=messageRepo;
+        this.reservationRepo=reservationRepo;
     }
 
     public List<BookModel> getBooksInfo() {
@@ -70,6 +75,45 @@ public class LibraryService {
 
     public BookModel getBookById(Long id){
         return bookRepo.getInfoById(id);
+    }
+
+    public int getBookAmount(Long id){
+        return bookRepo.getById(id).getAmount();
+    }
+
+    public void updateBookAmount(Long id,Integer newAmount){
+         bookRepo.getById(id).setAmount(newAmount);
+    }
+
+    public void addReservatio(Long bookId,Long userId) {
+
+        Reservation reservation=Reservation.builder()
+                .user(userRepo.getById(userId))
+                .book(bookRepo.getById(bookId))
+                .reservationDate( LocalDate.now())
+                .returnDate(LocalDate.from(LocalDate.now().plusDays(7)))
+                .build();
+
+        reservationRepo.save(reservation);
+    }
+
+    public boolean reserveBook(ReservationModel reservationModel){
+        int amount=getBookAmount(reservationModel.getBookId());
+        if(amount>0){
+            updateBookAmount(reservationModel.getBookId(),amount-1);
+            addReservatio(reservationModel.getBookId(),reservationModel.getUserId());
+            return true;
+        }
+        return false;
+
+    }
+
+    public User getUserInfo(String email){
+        return userRepo.findByEmail(email);
+    }
+
+    public List<UserReservationsModel> getReservations(Long id){
+        return reservationRepo.getUserReservations(id);
     }
 
 

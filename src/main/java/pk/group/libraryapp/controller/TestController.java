@@ -1,6 +1,8 @@
 package pk.group.libraryapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pk.group.libraryapp.entities.*;
 import pk.group.libraryapp.model.*;
@@ -46,9 +48,26 @@ public class TestController {
         return libraryService.getAllUsers();
     }
 
+    @GetMapping("/me/{email}")
+    public User getUserInfo(@PathVariable String email) {
+        return libraryService.getUserInfo(email);
+    }
+
+    @GetMapping("/reservations/{userId}")
+    public List<UserReservationsModel> getReservations(@PathVariable String userId) {
+        return libraryService.getReservations(Long.parseLong(userId));
+    }
+
     @PostMapping("/user/message")
     public void addMessage(@RequestBody Messages message){
         libraryService.addMessage(message);
+    }
+
+    @PostMapping("/book/reservation")
+    @ResponseBody
+    public ResponseEntity  reserveBook(@RequestBody ReservationModel reservationModel){
+        if(libraryService.reserveBook(reservationModel)) return new ResponseEntity(HttpStatus.OK);
+        else return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
 

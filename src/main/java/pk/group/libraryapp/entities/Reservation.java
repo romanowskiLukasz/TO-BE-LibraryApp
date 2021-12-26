@@ -33,8 +33,10 @@ public class Reservation {
     @ManyToOne
     private Book book;
 
-    public Reservation( User user, Book book) {
+    public Reservation( User user, Book book,LocalDate reservationDate,LocalDate returnDate) {
         this.user = user;
         this.book = book;
+        this.reservationDate=reservationDate;
+        this.returnDate=returnDate;
     }
 }
