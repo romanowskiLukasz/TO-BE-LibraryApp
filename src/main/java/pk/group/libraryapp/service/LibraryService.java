@@ -26,13 +26,15 @@ public class LibraryService {
     UserRepo userRepo;
     MessageRepo messageRepo;
     ReservationRepo reservationRepo;
+    RatingRepo ratingRepo;
 
     @Autowired
-    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo) {
+    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo,RatingRepo ratingRepo) {
         this.bookRepo=bookRepo;
         this.userRepo = userRepo;
         this.messageRepo=messageRepo;
         this.reservationRepo=reservationRepo;
+        this.ratingRepo=ratingRepo;
     }
 
     public List<BookModel> getBooksInfo() {
@@ -114,6 +116,20 @@ public class LibraryService {
 
     public List<UserReservationsModel> getReservations(Long id){
         return reservationRepo.getUserReservations(id);
+    }
+
+    public void addRating(RatingModel ratingModel){
+        Rating rating=Rating.builder()
+                .starsCount(ratingModel.getStars_count())
+                .book(bookRepo.getById(ratingModel.getBook_book_id()))
+                .user(userRepo.getById(ratingModel.getUser_id()))
+                .build();
+        ratingRepo.save(rating);
+
+    }
+
+    public List<RatingModel> getRatings(Long userId){
+        return ratingRepo.getInfoById(userId);
     }
 
 

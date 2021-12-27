@@ -70,5 +70,15 @@ public class TestController {
         else return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
+    @PostMapping("/rating")
+    public void addRating(@RequestBody RatingModel ratingModel){
+         libraryService.addRating(ratingModel);
+    }
+
+    @GetMapping("/ratings/{userId}")
+    public List<RatingModel> getRatings(@PathVariable String userId) {
+        return libraryService.getRatings(Long.parseLong(userId));
+    }
+
 
 }
