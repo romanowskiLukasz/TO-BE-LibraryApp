@@ -49,7 +49,7 @@ public class TestController {
     }
 
     @GetMapping("/me/{email}")
-    public User getUserInfo(@PathVariable String email) {
+    public UserModel getUserInfo(@PathVariable String email) {
         return libraryService.getUserInfo(email);
     }
 
@@ -78,6 +78,11 @@ public class TestController {
     @GetMapping("/ratings/{userId}")
     public List<RatingModel> getRatings(@PathVariable String userId) {
         return libraryService.getRatings(Long.parseLong(userId));
+    }
+
+    @PutMapping("user/changePassword")
+    public void changePassword(@RequestBody ChangePasswordModel changePasswordModel){
+        libraryService.changePassword(changePasswordModel);
     }
 
 

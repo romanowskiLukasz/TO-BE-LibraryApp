@@ -5,17 +5,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import pk.group.libraryapp.entities.*;
 import pk.group.libraryapp.model.*;
 import pk.group.libraryapp.repo.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 
 @org.springframework.stereotype.Service
 public class LibraryService {
@@ -110,8 +110,8 @@ public class LibraryService {
 
     }
 
-    public User getUserInfo(String email){
-        return userRepo.findByEmail(email);
+    public UserModel getUserInfo(String email){
+        return userRepo.findModelByEmail(email);
     }
 
     public List<UserReservationsModel> getReservations(Long id){
@@ -132,5 +132,11 @@ public class LibraryService {
         return ratingRepo.getInfoById(userId);
     }
 
+    public void changePassword(ChangePasswordModel changePasswordModel){
+        User updatedUser= userRepo.getById(changePasswordModel.getId());
+        updatedUser.setPassword(PASSWORD_ENCODER.encode(changePasswordModel.getNewPassword()));
+        userRepo.save(updatedUser);
+
+    }
 
 }
