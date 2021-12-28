@@ -27,14 +27,16 @@ public class LibraryService {
     MessageRepo messageRepo;
     ReservationRepo reservationRepo;
     RatingRepo ratingRepo;
+    FormRepo formRepo;
 
     @Autowired
-    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo,RatingRepo ratingRepo) {
+    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo,RatingRepo ratingRepo,FormRepo formRepo) {
         this.bookRepo=bookRepo;
         this.userRepo = userRepo;
         this.messageRepo=messageRepo;
         this.reservationRepo=reservationRepo;
         this.ratingRepo=ratingRepo;
+        this.formRepo=formRepo;
     }
 
     public List<BookModel> getBooksInfo() {
@@ -132,10 +134,41 @@ public class LibraryService {
         return ratingRepo.getInfoById(userId);
     }
 
-    public void changePassword(ChangePasswordModel changePasswordModel){
+
+
+    public void PostForm(FormModel form){
+        Form newForm=Form.builder()
+                .author(form.getAuthor())
+                .title(form.getTitle())
+                .publishingHouse(form.getPublishingHouse())
+                .user(userRepo.getById(form.getUserId()))
+                .build();
+        formRepo.save(newForm);
+    }
+
+    public String changeEmail(ChangeEmailModel changeEmailModel){
+
+        User updatedUser= userRepo.getById(changeEmailModel.getId());
+        if(PASSWORD_ENCODER.matches(changeEmailModel.getPassword(), updatedUser.getPassword())){
+            updatedUser.setEmail(changeEmailModel.getNewEmail());
+            userRepo.save(updatedUser);
+            return "0";
+        }
+        else {
+            return "1";
+        }
+    }
+
+    public String changePassword(ChangePasswordModel changePasswordModel){
         User updatedUser= userRepo.getById(changePasswordModel.getId());
-        updatedUser.setPassword(PASSWORD_ENCODER.encode(changePasswordModel.getNewPassword()));
-        userRepo.save(updatedUser);
+        if(PASSWORD_ENCODER.matches(changePasswordModel.getPassword(), updatedUser.getPassword())){
+            updatedUser.setPassword(PASSWORD_ENCODER.encode(changePasswordModel.getNewPassword()));
+            userRepo.save(updatedUser);
+            return "0";
+        }
+        else {
+            return "1";
+        }
 
     }
 

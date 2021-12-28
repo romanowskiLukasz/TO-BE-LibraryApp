@@ -81,8 +81,18 @@ public class TestController {
     }
 
     @PutMapping("user/changePassword")
-    public void changePassword(@RequestBody ChangePasswordModel changePasswordModel){
-        libraryService.changePassword(changePasswordModel);
+    public String changePassword(@RequestBody ChangePasswordModel changePasswordModel){
+        return libraryService.changePassword(changePasswordModel);
+    }
+
+    @PostMapping("/user/form")
+    public void PostForm(@RequestBody FormModel form){
+        libraryService.PostForm(form);
+    }
+
+    @PutMapping("/user/changeEmail")
+    public String changeEmail(@RequestBody ChangeEmailModel changeEmailModel){
+        return libraryService.changeEmail(changeEmailModel);
     }
 
 

@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ChangePasswordModel {
+public class ChangeEmailModel {
     private Long id;
     private String password;
-    private String newPassword;
+    private String newEmail;
 }
