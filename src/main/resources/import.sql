@@ -47,5 +47,5 @@ insert into book_author (book_id,author_id) values (7,5)
 
 insert into user (email,name,password) values ('lukas.r200@gmail.com','Lukasz Romanowski','$2a$10$S6haaCfnUQdp2tpsBEUUReSZIIUViKjRK2rn8gFWUHdjvThaCM9hW')
 
-
-
+insert into borrowed_books (reservation_date,return_date,book_book_id,user_id) values ("2021-12-29","2022-01-05",1,1)
+insert into borrowed_books (reservation_date,return_date,book_book_id,user_id) values ("2021-12-30","2021-01-06",2,1)

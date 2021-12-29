@@ -95,5 +95,11 @@ public class TestController {
         return libraryService.changeEmail(changeEmailModel);
     }
 
+    @GetMapping("/borrowedBooks/{userId}")
+    public List<UserBorrowModel> getBorrowedBooks(@PathVariable String userId) {
+        return libraryService.getBorrowedBooks(Long.parseLong(userId));
+    }
+
+
 
 }

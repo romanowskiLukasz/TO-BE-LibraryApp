@@ -28,15 +28,17 @@ public class LibraryService {
     ReservationRepo reservationRepo;
     RatingRepo ratingRepo;
     FormRepo formRepo;
+    BorrowedRepo borrowedRepo;
 
     @Autowired
-    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo,RatingRepo ratingRepo,FormRepo formRepo) {
+    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo,RatingRepo ratingRepo,FormRepo formRepo,BorrowedRepo borrowedRepo) {
         this.bookRepo=bookRepo;
         this.userRepo = userRepo;
         this.messageRepo=messageRepo;
         this.reservationRepo=reservationRepo;
         this.ratingRepo=ratingRepo;
         this.formRepo=formRepo;
+        this.borrowedRepo=borrowedRepo;
     }
 
     public List<BookModel> getBooksInfo() {
@@ -171,5 +173,11 @@ public class LibraryService {
         }
 
     }
+
+    public List<UserBorrowModel> getBorrowedBooks(Long id){
+        return borrowedRepo.getUserBorrowedBook(id);
+    }
+
+
 
 }
