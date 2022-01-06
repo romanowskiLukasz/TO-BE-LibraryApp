@@ -27,6 +27,11 @@ public class TestController {
         return libraryService.getBooksInfo();
     }
 
+    @GetMapping("/popularBooks")
+    public List<PopularBookModel> getPopularBooksInfo(){
+        return libraryService.getPopularBooksInfo();
+    }
+
     @GetMapping("/books/{bookId}")
     public BookModel getBookByID(@PathVariable String bookId){
         return libraryService.getBookById(Long.parseLong(bookId));
@@ -44,7 +49,7 @@ public class TestController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
+    public List<UserModel> getAllUsers() {
         return libraryService.getAllUsers();
     }
 
@@ -80,11 +85,6 @@ public class TestController {
         return libraryService.getRatings(Long.parseLong(userId));
     }
 
-    @GetMapping("/avgRatings")
-    public List<AvgRatingModel> getAvgRatings() {
-        return libraryService.getAvgRatings();
-    }
-
     @PutMapping("user/changePassword")
     public String changePassword(@RequestBody ChangePasswordModel changePasswordModel){
         return libraryService.changePassword(changePasswordModel);
@@ -103,6 +103,46 @@ public class TestController {
     @GetMapping("/borrowedBooks/{userId}")
     public List<UserBorrowModel> getBorrowedBooks(@PathVariable String userId) {
         return libraryService.getBorrowedBooks(Long.parseLong(userId));
+    }
+
+    @GetMapping("/avgRatings")
+    public List<AvgRatingModel> getAvgRatings() {
+        return libraryService.getAvgRatings();
+    }
+
+    @DeleteMapping("/deleteForm/{formId}")
+    public void deleteForm(@PathVariable String formId){
+        libraryService.deleteForm(Long.parseLong(formId));
+    }
+
+    @GetMapping("/admin/getForms")
+    public List<FormModel> getForms() {
+        return libraryService.getForms();
+    }
+
+    @GetMapping("/userInfo/{id}")
+    public UserModel getUserInfoById(@PathVariable String id) {
+        return libraryService.getUserInfoById(Long.parseLong(id));
+    }
+
+    @PostMapping("/admin/addBook")
+    public void postBook(@RequestBody FormModel formModel){
+        libraryService.postBook(formModel);
+    }
+
+    @GetMapping("/admin/allReservations")
+    public List<AllReservationsModel> getAllReservations() {
+        return libraryService.getAllReservations();
+    }
+
+    @DeleteMapping("/deleteReservation/{reservationId}")
+    public void deleteReservation(@PathVariable String reservationId){
+        libraryService.deleteReservation(Long.parseLong(reservationId));
+    }
+
+    @PostMapping("/admin/addBorrowedBook")
+    public void postBorrowedBook(@RequestBody ReservationModel reservationModel){
+        libraryService.postBorrowedBook(reservationModel);
     }
 
 

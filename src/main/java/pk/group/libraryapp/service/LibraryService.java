@@ -30,9 +30,11 @@ public class LibraryService {
     RatingRepo ratingRepo;
     FormRepo formRepo;
     BorrowedRepo borrowedRepo;
+    PublishingHouseRepo publishingHouseRepo;
+    BorrowedBooksRepo borrowedBooksRepo;
 
     @Autowired
-    public LibraryService(BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo,RatingRepo ratingRepo,FormRepo formRepo,BorrowedRepo borrowedRepo) {
+    public LibraryService(BorrowedBooksRepo borrowedBooksRepo,BookRepo bookRepo,UserRepo userRepo,MessageRepo messageRepo,ReservationRepo reservationRepo,RatingRepo ratingRepo,FormRepo formRepo,BorrowedRepo borrowedRepo,PublishingHouseRepo publishingHouseRepo) {
         this.bookRepo=bookRepo;
         this.userRepo = userRepo;
         this.messageRepo=messageRepo;
@@ -40,14 +42,20 @@ public class LibraryService {
         this.ratingRepo=ratingRepo;
         this.formRepo=formRepo;
         this.borrowedRepo=borrowedRepo;
+        this.publishingHouseRepo=publishingHouseRepo;
+        this.borrowedBooksRepo=borrowedBooksRepo;
     }
 
     public List<BookModel> getBooksInfo() {
         return bookRepo.getBooksInfo();
     }
 
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+    public List<PopularBookModel> getPopularBooksInfo() {
+        return bookRepo.getPopularBooksInfo();
+    }
+
+    public List<UserModel> getAllUsers() {
+        return userRepo.getAllUsers();
     }
 
     public void registerUser(RegisterModel registerModel) {
@@ -141,6 +149,8 @@ public class LibraryService {
 
     public void PostForm(FormModel form){
         Form newForm=Form.builder()
+                .description((form.getDescription()))
+                .img(form.getImg())
                 .author(form.getAuthor())
                 .title(form.getTitle())
                 .publishingHouse(form.getPublishingHouse())
@@ -181,10 +191,58 @@ public class LibraryService {
 
     public List<AvgRatingModel> getAvgRatings(){
         List<AvgRatingModel> avgBooksRatings=new ArrayList<>();
-        for(long i=1;i<=7;i++) avgBooksRatings.add(ratingRepo.getAvgBookRating(i));
+        for(long i=1;i<=bookRepo.count();i++) avgBooksRatings.add(ratingRepo.getAvgBookRating(i));
         return avgBooksRatings;
     }
 
+    public void deleteForm(Long formId){
+        formRepo.deleteById(formId);
+    }
 
+    public void deleteReservation(Long reservationId){
+        reservationRepo.deleteById(reservationId);
+    }
+
+
+    public List<FormModel> getForms(){
+        return formRepo.getAllForms();
+    }
+
+    public UserModel getUserInfoById(Long id){
+        return userRepo.findUserById(id);
+    }
+
+    public void postBook(FormModel formModel){
+        List<Author> bookAuthors=new ArrayList<>();
+        Author newAuthor=Author.builder().name(formModel.getAuthor()).build();
+        bookAuthors.add(newAuthor);
+
+        PublishingHouse newPublishingHouse= PublishingHouse.builder().name(formModel.getPublishingHouse()).build();
+
+        publishingHouseRepo.save(newPublishingHouse);
+
+        Book newBook=Book.builder()
+                .authors(bookAuthors)
+                .img(formModel.getImg())
+                .description(formModel.getDescription())
+                .publishingHouse(newPublishingHouse)
+                .title(formModel.getTitle())
+                .build();
+        bookRepo.save(newBook);
+    }
+
+    public void postBorrowedBook(ReservationModel reservationModel){
+        BorrowedBooks newBorrowedBook=BorrowedBooks.builder()
+                .user(userRepo.getById(reservationModel.getUserId()))
+                .book(bookRepo.getById(reservationModel.getBookId()))
+                .reservationDate( LocalDate.now())
+                .returnDate(LocalDate.from(LocalDate.now().plusDays(7)))
+                .build();
+        borrowedBooksRepo.save(newBorrowedBook);
+    }
+
+    public List<AllReservationsModel> getAllReservations(){
+        return reservationRepo.getAllReservations();
+    }
 
 }

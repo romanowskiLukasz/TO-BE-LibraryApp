@@ -9,9 +9,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserModel {
+public class AllReservationsModel {
     Long id;
-    String name;
-    String email;
-    String account_type;
+    String bookTitle;
+    String bookAuthor;
+    String userName;
+    Long userId;
+    Long bookId;
 }
