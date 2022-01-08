@@ -245,4 +245,12 @@ public class LibraryService {
         return reservationRepo.getAllReservations();
     }
 
+    public List<AllBorrowedBooksModel> getAllBorrowedBooks(){
+        return borrowedRepo.getAllBorrowedBooks();
+    }
+
+    public void deleteBorrowedBook(Long borrowedBookId){
+        borrowedRepo.deleteById(borrowedBookId);
+    }
+
 }

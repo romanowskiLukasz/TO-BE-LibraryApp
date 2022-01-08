@@ -140,6 +140,16 @@ public class TestController {
         libraryService.deleteReservation(Long.parseLong(reservationId));
     }
 
+    @GetMapping("/admin/allBorrowedBooks")
+    public List<AllBorrowedBooksModel> getAllBorrowedBooks() {
+        return libraryService.getAllBorrowedBooks();
+    }
+
+    @DeleteMapping("/deleteBorrowedBook/{borrowedBookId}")
+    public void deleteBorrowedBook(@PathVariable String borrowedBookId){
+        libraryService.deleteBorrowedBook(Long.parseLong(borrowedBookId));
+    }
+
     @PostMapping("/admin/addBorrowedBook")
     public void postBorrowedBook(@RequestBody ReservationModel reservationModel){
         libraryService.postBorrowedBook(reservationModel);
